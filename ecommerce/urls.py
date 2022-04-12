@@ -18,13 +18,14 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from customers.api.viewsets import CustomersViewSet
 from products.api.viewsets import ProductsViewSet
-from sales.api.viewsets import SalesViewSet
+from sales.api.viewsets import SalesViewSet, SalesItemsViewSet
 from sellers.api.viewsets import SellersViewSet
 
 router = DefaultRouter()
 router.register(r'costumers', CustomersViewSet, basename="clientes")
 router.register(r'products', ProductsViewSet, basename="produtos")
 router.register(r'sales', SalesViewSet, basename="vendas")
+router.register(r'sales_items', SalesItemsViewSet, basename="itens_vendas")
 router.register(r'sellers', SellersViewSet, basename="vendedores")
 
 urlpatterns = [

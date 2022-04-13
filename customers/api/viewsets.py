@@ -5,3 +5,4 @@ from customers.api.serializers import CustomersSerializer
 class CustomersViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomersSerializer
+    http_method_names = ['get', 'post', 'put', 'delete']

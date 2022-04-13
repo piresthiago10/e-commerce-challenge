@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from sales.models import Sale
 
@@ -10,13 +12,16 @@ from sellers.models import Seller
 class SellersComission(generics.GenericAPIView):
     queryset = Seller.objects.all()
     serializer_class = SellerComissionSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         serializer = SellerComissionSerializer(data=kwargs)
         if serializer.is_valid():
             data = serializer.validated_data
             sale = Sale()
-            comission = sale.calculate_commission(data['id'], data['start_date'], data['end_date'])
+            comission = sale.calculate_commission(
+                data['id'], data['start_date'], data['end_date'])
             return Response({'comission': comission}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors,

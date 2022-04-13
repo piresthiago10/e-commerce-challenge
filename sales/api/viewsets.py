@@ -1,19 +1,19 @@
-from itertools import product
-from pyexpat import model
-
 from products.models import Product
 from rest_framework import status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from sales.api.serializers import (SalesDetailSerializer, SalesItemsSerializer,
                                    SalesSerializer)
 from sales.models import Sale, SaleItem
-import sellers
 
 
 class SalesViewSet(viewsets.ModelViewSet):
     queryset = Sale.objects.all()
     serializer_class = SalesSerializer
     http_method_names = ['get', 'post', 'put', 'delete']
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def create(self, request):
         data = request.data
@@ -32,8 +32,8 @@ class SalesViewSet(viewsets.ModelViewSet):
 
         sale_items = []
         for item in items_to_save:
-            product=item.get('product')
-            quantity=item.get('quantity')
+            product = item.get('product')
+            quantity = item.get('quantity')
             sale_item = SaleItem.objects.create(
                 product=product,
                 quantity=quantity)
@@ -46,7 +46,7 @@ class SalesViewSet(viewsets.ModelViewSet):
             customer = sales_serializer.validated_data.get('customer')
             sale = Sale.objects.create(seller=seller, customer=customer)
             sale.items.set(sale_items)
-        
+
         detail_serializer = SalesDetailSerializer(sale)
         return Response(detail_serializer.data, status=status.HTTP_201_CREATED)
 
@@ -55,9 +55,13 @@ class SalesDetailViewSet(viewsets.ModelViewSet):
     queryset = Sale.objects.all()
     serializer_class = SalesDetailSerializer
     http_method_names = ['get']
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
 class SalesItemsViewSet(viewsets.ModelViewSet):
     queryset = SaleItem.objects.all()
     serializer_class = SalesItemsSerializer
     http_method_names = ['get', 'post']
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]

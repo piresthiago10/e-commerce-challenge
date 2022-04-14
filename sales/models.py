@@ -22,6 +22,9 @@ class Sale(models.Model):
     items = models.ManyToManyField(SaleItem, blank=False)
 
     def items_comission_value(self, item: object) -> int:
+        """
+        Calculate the item commission value
+        """
         item_sale_date = item.get('date').time()
         product = Product.objects.get(id=item.get('product_id'))
         price = product.price
@@ -53,6 +56,9 @@ class Sale(models.Model):
         return round(comission, 2)
 
     def calculate_commission(self, seller: int, start_date: datetime, end_date: datetime):
+        """
+        Calculate the commission value
+        """
         sales = Sale.objects.filter(seller=seller).filter(date__gte=start_date, date__lte=end_date)
         comissions = []
         

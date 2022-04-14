@@ -45,7 +45,7 @@ api/comission/seller/<int:id>/start_date/<str:start_date>/end_date/<str:end_date
 ## Run tests:
 1. Na pasta ecommerce execute o comando:
 ```
-sudo docker-compose exec web python manage.py test
+docker-compose run web python manage.py test
 ```
 
 ## Ferramentas:

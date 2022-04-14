@@ -34,7 +34,6 @@ api/customers
 api/products'
 api/sales'
 api/detail_sales'
-api/sales_items'
 api/sellers'
 api/accounts'
 api/new_user'

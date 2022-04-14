@@ -6,3 +6,4 @@ python-decouple==3.6
 pytz==2022.1
 sqlparse==0.4.2
 ipdb==0.13.9
+freezegun==0.3.4

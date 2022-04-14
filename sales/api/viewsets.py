@@ -11,7 +11,7 @@ from sales.models import Sale, SaleItem
 class SalesViewSet(viewsets.ModelViewSet):
     queryset = Sale.objects.all()
     serializer_class = SalesSerializer
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post']
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -26,7 +26,7 @@ class SalesViewSet(viewsets.ModelViewSet):
             if item_serializer.is_valid(raise_exception=True):
                 product = item_serializer.validated_data.get('product')
                 quantity = item_serializer.validated_data.get('quantity')
-                if not product.verify_product_quantity(product, quantity):
+                if not product.verify_product_quantity(quantity):
                     return Response({'message': 'Quantity in stock is not enough.'}, status=status.HTTP_400_BAD_REQUEST)
                 items_to_save.append(item_serializer.validated_data)
 
@@ -62,6 +62,6 @@ class SalesDetailViewSet(viewsets.ModelViewSet):
 class SalesItemsViewSet(viewsets.ModelViewSet):
     queryset = SaleItem.objects.all()
     serializer_class = SalesItemsSerializer
-    http_method_names = ['get', 'post']
+    http_method_names = ['get']
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]

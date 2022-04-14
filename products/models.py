@@ -15,7 +15,7 @@ class Product(models.Model):
     commission_percentage = models.DecimalField(max_digits=3, decimal_places=1)
 
     def verify_product_quantity(self, quantity: int) -> bool:
-        return not self.quantity > quantity
+        return self.quantity > quantity
 
     def decrease_quantity(self, quantity:int) -> None:
         self.quantity -= quantity

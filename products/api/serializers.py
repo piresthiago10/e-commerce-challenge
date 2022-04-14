@@ -9,7 +9,7 @@ class ProductsSerializer(serializers.ModelSerializer):
     type_product = serializers.ChoiceField(
         choices=Product.CHOICES_TYPE_PRODUCT)
     price = serializers.DecimalField(max_digits=10, decimal_places=2)
-    quantity = serializers.IntegerField()
+    quantity = serializers.IntegerField(validators=[MinValueValidator(0)])
     commission_percentage = serializers.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
 
     class Meta:

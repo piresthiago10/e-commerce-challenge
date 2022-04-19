@@ -17,6 +17,11 @@ class ProductsSerializer(serializers.ModelSerializer):
         fields = ['id', 'bar_code', 'description', 'type_product',
                   'price', 'quantity', 'commission_percentage']
 
+class ProductSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
 class ProductsItemSerializer(serializers.ModelSerializer):
     description = serializers.CharField()
     type_product = serializers.ChoiceField(
